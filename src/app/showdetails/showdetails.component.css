@@ -1,0 +1,26 @@
+table {
+  margin: 15px;
+  width: 95%;
+}
+
+.dynamictext {
+  font-weight: bold;
+  font-size: large;
+}
+
+#details, #remarks, #issuedTo {
+  max-width: 750px;
+  margin:15px;
+}
+
+.empCard{
+  max-width: 160px
+}
+
+#empDetails{
+  max-width: 800px;
+  margin:15px;
+}
+.mat-card-header .mat-card-title {
+  font-size: 15px;
+}

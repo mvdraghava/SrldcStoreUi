@@ -1,0 +1,30 @@
+<h3 *ngIf="!showDetails">List of SRVS</h3>
+<h3 *ngIf="showDetails">SRLDC/{{selectedsrvsiv.srvdetails.indent_department}}/{{selectedsrvsiv.srvid}}</h3>
+<button mat-raised-button (click)="getList()" *ngIf="showDetails"> List of SRVS </button>
+<table mat-table [dataSource]="srvs" class="mat-elevation-z8" *ngIf="!showDetails">
+
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef> SlNo. </th>
+    <td mat-cell *matCellDef="let element"> {{element.srvdetails.id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="name_supplier">
+    <th mat-header-cell *matHeaderCellDef> Supplier Name </th>
+    <td mat-cell *matCellDef="let element"> {{element.srvdetails.name_supplier}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="indent_department">
+    <th mat-header-cell *matHeaderCellDef> Indenting Department </th>
+    <td mat-cell *matCellDef="let element"> {{element.srvdetails.indent_department}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="indent_ref_no">
+    <th mat-header-cell *matHeaderCellDef> Indent Reference Number </th>
+    <td mat-cell *matCellDef="let element"> {{element.srvdetails.indent_ref_no}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="showDetail(row)"></tr>
+</table>
+<app-showdetails [srvsivDetails]="selectedsrvsiv" *ngIf = "showDetails"></app-showdetails>
+

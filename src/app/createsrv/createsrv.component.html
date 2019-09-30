@@ -1,0 +1,84 @@
+<form id="createSRVForm" [formGroup]="createsrvForm">
+  <div class="radioGroup">
+  <label id="receipt_type">Select Mode Of Receipt</label>
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="example-radio-group"
+    formControlName = "mode_of_receipt">
+    <mat-radio-button class="example-radio-button" *ngFor="let type_receipt of modeOfReceipts" [value]="type_receipt">
+      {{type_receipt}}
+    </mat-radio-button>
+  </mat-radio-group>
+  </div>
+  <mat-form-field appearance="outline">
+    <mat-label>Supplier Name</mat-label>
+    <input matInput formControlName="name_supplier" placeholder="Placeholder">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>{{createsrvForm.get('mode_of_receipt').value}} Ref No</mat-label>
+    <input matInput formControlName="indent_ref_no" placeholder="Placeholder">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Indent Department</mat-label>
+    <input matInput formControlName="indent_department" placeholder="Placeholder">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Indent Date</mat-label>
+    <input matInput formControlName="indent_date" [matDatepicker]="picker" placeholder="Choose Date">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div *ngFor="let emp of employeeDetails;let i=index" [formGroupName]="emp">
+    <p>{{employeeDetailsDisplay[i]}}</p>
+    <mat-form-field appearance="outline">
+      <mat-label>Employee Number</mat-label>
+      <input matInput formControlName="emp_no" placeholder="Placeholder">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Employee Name</mat-label>
+      <input matInput formControlName="name" placeholder="Placeholder">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Designation</mat-label>
+      <input matInput formControlName="designation" placeholder="Placeholder">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Department</mat-label>
+      <input matInput formControlName="department" placeholder="Placeholder">
+    </mat-form-field>
+  </div>
+  <div formArrayName="items" >
+    <button mat-raised-button type="button" (click)="addItem()" *ngIf="items.controls.length===0">Add Items </button>
+    <h5 *ngIf="items.controls.length>0">List of Items</h5>
+    <div *ngFor="let item of items.controls;let i = index;">
+      <div [formGroupName]="i" class="itemList">
+        <mat-form-field appearance="outline">
+          <mat-label>Description of Item</mat-label>
+          <input matInput formControlName="description" placeholder="Placeholder">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Received Quantity</mat-label>
+          <input matInput formControlName="received_qty"  type="number" min="0" step="1" placeholder="Placeholder">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Rejected Quantity</mat-label>
+          <input matInput formControlName="rejected_qty" type="number" placeholder="Placeholder">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Unit Rate</mat-label>
+          <input matInput formControlName="unit_rate" placeholder="Placeholder">
+        </mat-form-field>
+        <button mat-icon-button (click)="removeItem(i)" type="button" ><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button type="button" *ngIf = "i == items.controls.length-1" (click)="addItem()"><mat-icon>add</mat-icon></button>
+      </div>
+    </div>
+  </div>
+  <mat-form-field class="remarks" appearance="outline">
+      <mat-label>Remarks</mat-label>
+      <textarea matInput formControlName="remarks" placeholder="Remarks"></textarea>
+  </mat-form-field>
+
+  <button mat-raised-button type="button" (click)="send_details()" [disabled]="createsrvForm.status == 'INVALID'" color="primary">Fill SIV Details</button>
+
+</form>

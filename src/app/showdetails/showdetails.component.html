@@ -1,0 +1,82 @@
+<div id="srvDetails">
+  <div>
+    <mat-card id="details">
+      <mat-card-header>
+          <mat-card-title>SRV/SIV Details</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p> <span class="dynamictext">{{srvsivDetails.srvdetails.name_supplier}}</span> supplied below items
+        with respect to <span class="dynamictext">{{srvsivDetails.srvdetails.mode_of_receipt}}</span> reference Number
+         <span class="dynamictext">{{srvsivDetails.srvdetails.indent_ref_no}}</span> dated <span class="dynamictext">{{srvsivDetails.srvdetails.indent_date|date: 'dd/MM/yyyy'}}</span> of
+          <span class="dynamictext">{{srvsivDetails.srvdetails.indent_department}}</span> Department</p>
+      </mat-card-content>
+    </mat-card>
+    <div id="empDetails" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">
+      <mat-card *ngFor="let emp of employeeDetails;let i=index;" class="empCard">
+        <mat-card-header>
+          <mat-card-title>{{employeeDetailsDisplay[i]}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{srvsivDetails.srvdetails[emp].name}} </p>
+          <p>{{srvsivDetails.srvdetails[emp].emp_no}}</p>
+          <p>{{srvsivDetails.srvdetails[emp].designation}} </p>
+          <p>{{srvsivDetails.srvdetails[emp].department}} </p>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="empCard">
+        <mat-card-header>
+          <mat-card-title>Issued to</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>{{srvsivDetails.sivdetails.issued_to.name}} </p>
+          <p>{{srvsivDetails.sivdetails.issued_to.emp_no}}</p>
+          <p>{{srvsivDetails.sivdetails.issued_to.designation}} </p>
+          <p>{{srvsivDetails.sivdetails.issued_to.department}} </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div>
+      <table mat-table [dataSource]="srvsivDetails.srvdetails.items" class="mat-elevation-z2">
+        <ng-container matColumnDef="SlNo">
+          <th mat-header-cell *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element;let i= index;"> {{i+1}} </td>
+        </ng-container>
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef> Description </th>
+          <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+        </ng-container>
+        <ng-container matColumnDef="received_qty">
+          <th mat-header-cell *matHeaderCellDef> Received Qty </th>
+          <td mat-cell *matCellDef="let element"> {{element.received_qty}} </td>
+        </ng-container>
+        <ng-container matColumnDef="rejected_qty">
+          <th mat-header-cell *matHeaderCellDef> Rejected Qty </th>
+          <td mat-cell *matCellDef="let element"> {{element.rejected_qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taken_in_stock">
+          <th mat-header-cell *matHeaderCellDef> Taken In stock </th>
+          <td mat-cell *matCellDef="let element"> {{element.received_qty - element.rejected_qty}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="unit_rate">
+          <th mat-header-cell *matHeaderCellDef> Unit Rate </th>
+          <td mat-cell *matCellDef="let element"> {{element.unit_rate}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="total_value">
+          <th mat-header-cell *matHeaderCellDef> Total Value </th>
+          <td mat-cell *matCellDef="let element"> {{element.unit_rate * (element.received_qty - element.rejected_qty)}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <p id="remarks">*Remarks: <span class="dynamictext">{{srvsivDetails.srvdetails.remarks}}</span></p>
+    <div id="issuedTo">
+      <p> Issued Reaason: <span class="dynamictext">{{srvsivDetails.sivdetails.issued_reason}}</span></p>
+    </div>
+  </div>
+</div>
+

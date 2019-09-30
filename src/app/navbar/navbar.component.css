@@ -1,0 +1,14 @@
+.menu-spacer {
+  flex: 1 1 auto;
+}
+
+
+.mat-toolbar.mat-primary{
+  background: #1976d2;
+  color: #fff;
+  position: sticky;
+  top: 0; /* Sets the sticky toolbar to be on top */
+  z-index: 1000; /* Ensure that your app's content doesn't overlap the toolbar */
+}
+
+
