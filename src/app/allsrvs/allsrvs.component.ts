@@ -8,7 +8,7 @@ import { SrvsivDetails } from '../srvsivDetails';
   styleUrls: ['./allsrvs.component.css']
 })
 export class AllsrvsComponent implements OnInit {
-  srvs: any[] =  [];
+  srvs: any =  {};
   selectedsrvsiv = new SrvsivDetails();
   showDetails = false;
   displayedColumns: string[] = ['id', 'name_supplier', 'indent_department', 'indent_ref_no'];

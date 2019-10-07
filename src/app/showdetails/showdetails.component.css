@@ -1,6 +1,6 @@
 table {
   margin: 15px;
-  width: 95%;
+  width: 850px;
 }
 
 .dynamictext {
@@ -8,8 +8,13 @@ table {
   font-size: large;
 }
 
-#details, #remarks, #issuedTo {
-  max-width: 750px;
+#remarks, #issuedTo {
+  width: 800px;
+  margin:15px;
+}
+
+#details {
+  width: 818px;
   margin:15px;
 }
 
@@ -18,9 +23,25 @@ table {
 }
 
 #empDetails{
-  max-width: 800px;
+  max-width: 850px;
   margin:15px;
 }
 .mat-card-header .mat-card-title {
   font-size: 15px;
+}
+
+.mat-column-description {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 28% !important;
+  width: 28% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  word-break: break-word;
+
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
 }

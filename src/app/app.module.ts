@@ -49,7 +49,8 @@ import { SrvsivDetails } from './srvsivDetails';
       { path: 'allsrvs', component: AllsrvsComponent},
       { path: 'allsivs', component: AllsivsComponent},
       { path: 'srvsivform', component: SrvsivformComponent},
-      { path: 'srvsivdetails', component: ShowdetailsComponent}
+      { path: 'srvsivdetails', component: ShowdetailsComponent},
+      { path: '', component: SrvsivformComponent}
     ])
   ],
   providers: [],

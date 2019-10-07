@@ -1,58 +1,81 @@
 <form id="createSRVForm" [formGroup]="createsrvForm">
-  <div class="radioGroup">
-  <label id="receipt_type">Select Mode Of Receipt</label>
+  <div class="radioGroup" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center">
+  <label id="receipt_type">Select Mode of Receipt</label>
   <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="example-radio-group"
-    formControlName = "mode_of_receipt">
+    formControlName = "mode_of_receipt"
+    fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-evenly">
     <mat-radio-button class="example-radio-button" *ngFor="let type_receipt of modeOfReceipts" [value]="type_receipt">
       {{type_receipt}}
     </mat-radio-button>
   </mat-radio-group>
   </div>
-  <mat-form-field appearance="outline">
-    <mat-label>Supplier Name</mat-label>
-    <input matInput formControlName="name_supplier" placeholder="Placeholder">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>{{createsrvForm.get('mode_of_receipt').value}} Ref No</mat-label>
-    <input matInput formControlName="indent_ref_no" placeholder="Placeholder">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Indent Department</mat-label>
-    <input matInput formControlName="indent_department" placeholder="Placeholder">
-  </mat-form-field>
-  <mat-form-field appearance="outline">
-    <mat-label>Indent Date</mat-label>
-    <input matInput formControlName="indent_date" [matDatepicker]="picker" placeholder="Choose Date">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
-
-  <div *ngFor="let emp of employeeDetails;let i=index" [formGroupName]="emp">
-    <p>{{employeeDetailsDisplay[i]}}</p>
+  <div class="indentdetails" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <mat-form-field appearance="outline">
-      <mat-label>Employee Number</mat-label>
-      <input matInput formControlName="emp_no" placeholder="Placeholder">
+      <mat-label>Supplier Name</mat-label>
+      <input matInput formControlName="name_supplier" placeholder="Placeholder">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Employee Name</mat-label>
-      <input matInput formControlName="name" placeholder="Placeholder">
+      <mat-label>{{createsrvForm.get('mode_of_receipt').value}} Ref No</mat-label>
+      <input matInput formControlName="indent_ref_no" placeholder="Placeholder">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Designation</mat-label>
-      <input matInput formControlName="designation" placeholder="Placeholder">
+      <mat-label>Indent Department</mat-label>
+      <input matInput formControlName="indent_department" placeholder="Placeholder">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Department</mat-label>
-      <input matInput formControlName="department" placeholder="Placeholder">
+      <mat-label>Indent Date</mat-label>
+      <input matInput formControlName="indent_date" [matDatepicker]="picker" (focus)="picker.open()" placeholder="Choose Date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
   </div>
+
+  <div>
+    <label class="employeelabel"> Inspected and Accepted By  </label>
+    <mat-form-field appearance="outline">
+      <mat-label>Inspected by</mat-label>
+      <input type="text" Placeholder="Reason" matInput formControlName="inspected_by" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let emp of inspFilteredemployees | async" [value]="emp">
+          {{emp.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label class="employeelabel1"> Inspected Counter Signed By</label>
+    <mat-form-field appearance="outline">
+      <mat-label>Inspected CounterSigned by</mat-label>
+      <input type="text" Placeholder="Reason" matInput formControlName="inspected_countersigned_by" [matAutocomplete]="auto1">
+      <mat-autocomplete #auto1="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let emp of icountersignFilteredemployees | async" [value]="emp">
+          {{emp.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    <label class="employeelabel"> Received Counter Signed By</label>
+    <mat-form-field appearance="outline">
+      <mat-label>Received CounterSigned by</mat-label>
+      <input type="text" Placeholder="Reason" matInput formControlName="received_countersigned_by" [matAutocomplete]="auto2" >
+      <mat-autocomplete #auto2="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let emp of rcountersignFilteredemployees | async" [value]="emp">
+          {{emp.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
   <div formArrayName="items" >
     <button mat-raised-button type="button" (click)="addItem()" *ngIf="items.controls.length===0">Add Items </button>
     <h5 *ngIf="items.controls.length>0">List of Items</h5>
     <div *ngFor="let item of items.controls;let i = index;">
-      <div [formGroupName]="i" class="itemList">
+      <div [formGroupName]="i" class="itemList" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field appearance="outline">
           <mat-label>Description of Item</mat-label>
           <input matInput formControlName="description" placeholder="Placeholder">
@@ -67,10 +90,10 @@
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Unit Rate</mat-label>
-          <input matInput formControlName="unit_rate" placeholder="Placeholder">
+          <input matInput formControlName="unit_rate" type="number" placeholder="Placeholder">
         </mat-form-field>
-        <button mat-icon-button (click)="removeItem(i)" type="button" ><mat-icon>delete</mat-icon></button>
-        <button mat-icon-button type="button" *ngIf = "i == items.controls.length-1" (click)="addItem()"><mat-icon>add</mat-icon></button>
+        <button mat-icon-button (click)="removeItem(i)" type="button" class="icon"><mat-icon>delete</mat-icon></button>
+        <button mat-icon-button type="button" *ngIf = "i == items.controls.length-1" class="icon" (click)="addItem()"><mat-icon>add</mat-icon></button>
       </div>
     </div>
   </div>
@@ -79,6 +102,7 @@
       <textarea matInput formControlName="remarks" placeholder="Remarks"></textarea>
   </mat-form-field>
 
-  <button mat-raised-button type="button" (click)="send_details()" [disabled]="createsrvForm.status == 'INVALID'" color="primary">Fill SIV Details</button>
+  <button mat-raised-button type="button" (click)="send_details()"  color="primary">Fill SIV Details</button>
 
 </form>
+

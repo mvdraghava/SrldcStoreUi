@@ -1,14 +1,15 @@
-<div id="srvDetails">
+<div id="srvDetails" fxLayout="column" fxLayoutAlign="center center">
   <div>
     <mat-card id="details">
       <mat-card-header>
           <mat-card-title>SRV/SIV Details</mat-card-title>
       </mat-card-header>
-      <mat-card-content>
-        <p> <span class="dynamictext">{{srvsivDetails.srvdetails.name_supplier}}</span> supplied below items
-        with respect to <span class="dynamictext">{{srvsivDetails.srvdetails.mode_of_receipt}}</span> reference Number
-         <span class="dynamictext">{{srvsivDetails.srvdetails.indent_ref_no}}</span> dated <span class="dynamictext">{{srvsivDetails.srvdetails.indent_date|date: 'dd/MM/yyyy'}}</span> of
-          <span class="dynamictext">{{srvsivDetails.srvdetails.indent_department}}</span> Department</p>
+      <mat-card-content fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Name of Supplier :</p><p class="dynamictext">{{srvsivDetails.srvdetails.name_supplier}}</p> </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Mode of Receipt :</p> <p class="dynamictext">{{srvsivDetails.srvdetails.mode_of_receipt}}</p> </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Reference Number : </p><p class="dynamictext">{{srvsivDetails.srvdetails.indent_ref_no}}</p> </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> {{srvsivDetails.srvdetails.mode_of_receipt}} Date: </p> <p class="dynamictext">{{srvsivDetails.srvdetails.indent_date|date: 'dd/MM/yyyy'}}</p> </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Indent Department: </p><p class="dynamictext">{{srvsivDetails.srvdetails.indent_department}}</p> </div>
       </mat-card-content>
     </mat-card>
     <div id="empDetails" fxLayout="row" fxLayoutAlign="space-between" fxLayoutGap="5px">

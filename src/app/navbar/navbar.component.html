@@ -1,4 +1,4 @@
-<div  style="height: 100vh;">
+<div>
 <mat-toolbar color="primary">
   <button mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
           <mat-icon>menu</mat-icon>
@@ -18,7 +18,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <div class="container" fxLayoutAlign="center center">
+    <div class="container" fxLayoutAlign="center">
         <ng-content></ng-content>
     </div>
   </mat-sidenav-content>

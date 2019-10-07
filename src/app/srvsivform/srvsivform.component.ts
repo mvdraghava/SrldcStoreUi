@@ -5,6 +5,10 @@ import {DownloadPDF} from './downloadPDF';
 import { RequestserviceService } from '../requestservice.service';
 import { SrvsivDetails } from '../srvsivDetails';
 
+export interface SuccessData {
+  id: number;
+  result: string;
+}
 
 
 @Component({
@@ -33,6 +37,7 @@ export class SrvsivformComponent implements OnInit {
   gotoSiv(stepper: MatHorizontalStepper, srvdetails) {
     stepper.selected.completed = true;
     stepper.next();
+    window.scrollTo(0, 0);
     this.srvsivDetails.srvdetails = srvdetails;
   }
 
@@ -43,6 +48,7 @@ export class SrvsivformComponent implements OnInit {
   gotoDetails(stepper: MatHorizontalStepper, sivdetails) {
     stepper.selected.completed = true;
     stepper.next();
+    window.scrollTo(0, 0);
     this.srvsivDetails.sivdetails = sivdetails;
   }
 
@@ -50,8 +56,8 @@ export class SrvsivformComponent implements OnInit {
     this.rs.addsrvsiv(this.srvsivDetails).subscribe(
       data => {
         const dpdf  = new DownloadPDF();
-        dpdf.downloadSRVPDF(this.srvsivDetails.srvdetails);
-        dpdf.downloadSIVPDF(this.srvsivDetails.sivdetails, this.srvsivDetails.srvdetails);
+        dpdf.downloadSRVPDF(this.srvsivDetails.srvdetails, data.id);
+        dpdf.downloadSIVPDF(this.srvsivDetails.sivdetails, this.srvsivDetails.srvdetails, data.id);
       },
       error => {
         console.log( error);

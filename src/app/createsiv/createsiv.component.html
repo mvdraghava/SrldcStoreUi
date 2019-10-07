@@ -1,33 +1,28 @@
 <form id="createSivForm" [formGroup]="createsivForm">
-  <label> Issue Reason </label>
-  <mat-form-field appearance="outline">
-    <mat-label>Issue Reason</mat-label>
-    <input type="text" Placeholder="Reason" matInput formControlName="issued_reason" [matAutocomplete]="auto">
-    <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let reason of issueReasons" [value]="reason.value">
-        {{reason.viewValue}}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-  <div  formGroupName="issued_to">
-    <p>Issued To employee Details</p>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px" fxLayoutAlign="center center">
+    <label> Issue Reason </label>
     <mat-form-field appearance="outline">
-      <mat-label>Employee Number</mat-label>
-      <input matInput formControlName="emp_no" placeholder="Placeholder">
+      <mat-label>Issue Reason</mat-label>
+      <input type="text" Placeholder="Reason" matInput formControlName="issued_reason" [matAutocomplete]="auto1">
+      <mat-autocomplete #auto1="matAutocomplete">
+        <mat-option *ngFor="let reason of issueReasons" [value]="reason.value">
+          {{reason.viewValue}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
+    <label class="employeelabel"> Issued To  </label>
     <mat-form-field appearance="outline">
-      <mat-label>Employee Name</mat-label>
-      <input matInput formControlName="name" placeholder="Placeholder">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Designation</mat-label>
-      <input matInput formControlName="designation" placeholder="Placeholder">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Department</mat-label>
-      <input matInput formControlName="department" placeholder="Placeholder">
+      <mat-label>Issued To</mat-label>
+      <input type="text" Placeholder="Reason" matInput formControlName="issued_to" [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+        <mat-option *ngFor="let emp of issueFilteredemployees | async" [value]="emp">
+          {{emp.name}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
   </div>
-  <button mat-raised-button type="button" color="primary" (click)="go_to_srv()">SRV Form</button>
-  <button mat-raised-button type="button" color="primary" (click)="send_siv_details()" [disabled]="createsivForm.status === 'INVALID'">Check Details</button>
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+    <button mat-raised-button type="button" color="primary" (click)="go_to_srv()">SRV Form</button>
+    <button mat-raised-button type="button" color="primary" (click)="send_siv_details()" [disabled]="createsivForm.status === 'INVALID'">Check Details</button>
+  </div>
 </form>

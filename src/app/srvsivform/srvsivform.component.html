@@ -1,19 +1,19 @@
-<mat-horizontal-stepper  linear #stepper>
+<mat-horizontal-stepper linear  #stepper class="container">
   <mat-step  completed="false">
       <ng-template matStepLabel>Store Reciept Voucher</ng-template>
       <app-createsrv (srvcreated)="gotoSiv(stepper,$event)"></app-createsrv>
   </mat-step>
   <mat-step completed="false">
-      <ng-template matStepLabel>Srore Issue Voucher</ng-template>
+      <ng-template matStepLabel>Store Issue Voucher</ng-template>
       <app-createsiv (sivcreated)="gotoDetails(stepper,$event)" (gotosrv)="gobackSrv(stepper)"></app-createsiv>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Details</ng-template>
     <app-showdetails [srvsivDetails]="srvsivDetails"></app-showdetails>
-    <div>
-      <button mat-button (click)="downloadPDF()">Download</button>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="center center">
+      <button mat-raised-button type="button" matStepperPrevious color="primary">Edit</button>
+      <button mat-raised-button type="button" (click)="stepper.reset()" color="primary">Reset</button>
+      <button mat-raised-button type="button" (click)="downloadPDF()" color="primary">Download</button>
     </div>
   </mat-step>
 </mat-horizontal-stepper>
