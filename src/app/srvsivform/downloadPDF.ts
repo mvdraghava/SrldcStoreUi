@@ -103,7 +103,7 @@ export class DownloadPDF {
       list_item.push(item.rejected_qty);
       list_item.push(item.received_qty - item.rejected_qty);
       list_item.push(item.unit_rate);
-      list_item.push((item.received_qty - item.rejected_qty) * item.unit_rate);
+      list_item.push(((item.received_qty - item.rejected_qty) * item.unit_rate).toFixed(3));
       if (index === 0) {
         list_item.push({text: srvDetails.remarks, rowSpan: items.length});
       } else {
@@ -155,6 +155,13 @@ export class DownloadPDF {
     };
   }
 
+  getSIVNumber(indentDepartment, id) {
+    return {
+      style: 'subheader1',
+      text: 'SIV SL NO: SRLDC/Stores/' + indentDepartment + '/' + id.toString()
+    };
+  }
+
   getSupplier(supplier) {
     return {
       style: 'subheader1',
@@ -180,11 +187,11 @@ export class DownloadPDF {
     };
   }
 
-  getDate() {
+  getDate(srvsivDate) {
     return {
       style: 'subheader1',
       alignment: 'right',
-      text: 'Date: ' + this.getformatDate(new Date())
+      text: 'Date: ' + this.getformatDate(srvsivDate)
     };
   }
 
@@ -246,13 +253,13 @@ export class DownloadPDF {
         {
           columns: [
             [
-              this.getSRVNumber(srvDetails.indent_department, id),
+              this.getSIVNumber(srvDetails.indent_department, id),
               this.getSupplier(srvDetails.name_supplier),
               this.getIndentRef(srvDetails.mode_of_receipt, srvDetails.indent_ref_no, srvDetails.indent_date),
             ],
             [
               this.getRegion(),
-              this.getDate(),
+              this.getDate(srvDetails.srvsiv_date),
               this.getIndentDept(srvDetails.indent_department),
               {
                 style: 'subheader1',
@@ -273,11 +280,67 @@ export class DownloadPDF {
           }
         },
       ],
-      footer: this.getSIVSignatures(srvDetails, sivDetails),
+      footer(currentPage, PageCount) {
+        if (currentPage == PageCount) {
+          let x = callfunction1();
+          return x;
+        }
+      },
       styles: this.getStyles()
     };
-    pdfMake.createPdf(documentDefinition).open();
+    let callfunction1 = function() {
+      let ianda = Signatures('Inspected and Accepted By', srvDetails.inspected_by);
+      let csb = Signatures('Counter Signed By', srvDetails.inspected_countersigned_by);
+      let rb = Signatures('Received By', srvDetails.received_by);
+      let rcsb = Signatures('Counter Signed By', srvDetails.received_countersigned_by);
+      let it = Signatures('Issued to', sivDetails.issued_to);
+      let sivfooter = {
+        absolutePosition: {x: 40, y: -70},
+        columns: [
+          ianda,
+          csb,
+          rb,
+          rcsb,
+          it
+        ]
+      };
+      return sivfooter;
+    };
+    let Signatures = function(signedBy,empDetails) {
+      let Signature = [
+        [
+          {
+            style: 'subheader1',
+            text: signedBy + '\n\n',
+          },
+          {
+            style: 'subheader1',
+            text: 'Signature\n\n',
+          },
+          {
+            style: 'subheader1',
+            text: 'Name: ' + empDetails.name,
+          },
+          {
+            style: 'subheader1',
+            text: 'Emp No: ' + empDetails.emp_no,
+          },
+          {
+            style: 'subheader1',
+            text: 'Designation: ' + empDetails.designation,
+          },
+          {
+            style: 'subheader1',
+            text: 'Department: ' + empDetails.department,
+          }
+        ]
+      ];
+      return Signature;
+    };
+    pdfMake.createPdf(documentDefinition).download("SIV_"+srvDetails.name_supplier);
   }
+
+
 
   downloadSRVPDF(srvDetails, id) {
     pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -300,7 +363,7 @@ export class DownloadPDF {
             ],
             [
               this.getRegion(),
-              this.getDate(),
+              this.getDate(srvDetails.srvsiv_date),
               this.getIndentDept(srvDetails.indent_department),
             ]
           ]
@@ -319,6 +382,6 @@ export class DownloadPDF {
       footer: this.getSRVSignatures(srvDetails),
       styles: this.getStyles()
     };
-    pdfMake.createPdf(documentDefinition).open();
+    pdfMake.createPdf(documentDefinition).download("SRV_"+srvDetails.name_supplier);
   }
 }

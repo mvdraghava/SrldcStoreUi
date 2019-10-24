@@ -1,31 +1,42 @@
 <form id="createSRVForm" [formGroup]="createsrvForm">
-  <div class="radioGroup" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center">
-  <label id="receipt_type">Select Mode of Receipt</label>
-  <mat-radio-group
-    aria-labelledby="example-radio-group-label"
-    class="example-radio-group"
-    formControlName = "mode_of_receipt"
-    fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-evenly">
-    <mat-radio-button class="example-radio-button" *ngFor="let type_receipt of modeOfReceipts" [value]="type_receipt">
-      {{type_receipt}}
-    </mat-radio-button>
-  </mat-radio-group>
+  <div  fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" fxLayoutAlign="center">
+    <div class="radioGroup" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="center">
+    <label id="receipt_type">Select Mode of Receipt</label>
+    <mat-radio-group
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      formControlName = "mode_of_receipt"
+      fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px" fxLayoutAlign="space-evenly">
+      <mat-radio-button class="example-radio-button" *ngFor="let type_receipt of modeOfReceipts" [value]="type_receipt">
+        {{type_receipt}}
+      </mat-radio-button>
+    </mat-radio-group>
+    </div>
+
+    <mat-form-field appearance="outline">
+      <mat-label>SRVSIV Date</mat-label>
+      <input matInput formControlName="srvsiv_date" [matDatepicker]="picker1" (focus)="picker1.open()" placeholder="Choose Date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+
   </div>
+
   <div class="indentdetails" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
     <mat-form-field appearance="outline">
       <mat-label>Supplier Name</mat-label>
-      <input matInput formControlName="name_supplier" placeholder="Placeholder">
+      <input matInput formControlName="name_supplier" placeholder="Party Name">
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>{{createsrvForm.get('mode_of_receipt').value}} Ref No</mat-label>
-      <input matInput formControlName="indent_ref_no" placeholder="Placeholder">
+      <input matInput formControlName="indent_ref_no" placeholder="Ref No">
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Indent Department</mat-label>
-      <input matInput formControlName="indent_department" placeholder="Placeholder">
+      <input matInput formControlName="indent_department" placeholder="Department">
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <mat-label>Indent Date</mat-label>
+      <mat-label>{{createsrvForm.get('mode_of_receipt').value}} Date</mat-label>
       <input matInput formControlName="indent_date" [matDatepicker]="picker" (focus)="picker.open()" placeholder="Choose Date">
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
@@ -78,19 +89,19 @@
       <div [formGroupName]="i" class="itemList" fxLayout="row" fxLayout.xs="column" fxLayoutGap="10px">
         <mat-form-field appearance="outline">
           <mat-label>Description of Item</mat-label>
-          <input matInput formControlName="description" placeholder="Placeholder">
+          <input matInput formControlName="description" placeholder="Description">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Received Quantity</mat-label>
-          <input matInput formControlName="received_qty"  type="number" min="0" step="1" placeholder="Placeholder">
+          <input matInput formControlName="received_qty"  type="number" min="0" step="1" placeholder="0">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Rejected Quantity</mat-label>
-          <input matInput formControlName="rejected_qty" type="number" placeholder="Placeholder">
+          <input matInput formControlName="rejected_qty" type="number" placeholder="0">
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Unit Rate</mat-label>
-          <input matInput formControlName="unit_rate" type="number" placeholder="Placeholder">
+          <input matInput formControlName="unit_rate" type="number" placeholder="0">
         </mat-form-field>
         <button mat-icon-button (click)="removeItem(i)" type="button" class="icon"><mat-icon>delete</mat-icon></button>
         <button mat-icon-button type="button" *ngIf = "i == items.controls.length-1" class="icon" (click)="addItem()"><mat-icon>add</mat-icon></button>

@@ -9,6 +9,7 @@
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Mode of Receipt :</p> <p class="dynamictext">{{srvsivDetails.srvdetails.mode_of_receipt}}</p> </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Reference Number : </p><p class="dynamictext">{{srvsivDetails.srvdetails.indent_ref_no}}</p> </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> {{srvsivDetails.srvdetails.mode_of_receipt}} Date: </p> <p class="dynamictext">{{srvsivDetails.srvdetails.indent_date|date: 'dd/MM/yyyy'}}</p> </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> SRV/SIV Date: </p> <p class="dynamictext">{{srvsivDetails.srvdetails.srvsiv_date|date: 'dd/MM/yyyy'}}</p> </div>
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="10px"><p> Indent Department: </p><p class="dynamictext">{{srvsivDetails.srvdetails.indent_department}}</p> </div>
       </mat-card-content>
     </mat-card>
@@ -67,7 +68,7 @@
 
         <ng-container matColumnDef="total_value">
           <th mat-header-cell *matHeaderCellDef> Total Value </th>
-          <td mat-cell *matCellDef="let element"> {{element.unit_rate * (element.received_qty - element.rejected_qty)}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.unit_rate * (element.received_qty - element.rejected_qty) | number:'1.1-3':'en-IN'}} </td>
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

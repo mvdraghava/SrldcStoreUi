@@ -4,6 +4,7 @@ export class SrvsivDetails {
     name_supplier: '',
     indent_ref_no: '',
     indent_date: '',
+    srvsiv_date: '',
     indent_department: '',
     inspected_by: {
       emp_no: '',

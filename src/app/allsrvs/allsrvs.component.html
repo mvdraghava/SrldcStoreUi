@@ -1,7 +1,7 @@
 <h3 *ngIf="!showDetails">List of SRVS</h3>
 <h3 *ngIf="showDetails">SRLDC/{{selectedsrvsiv.srvdetails.indent_department}}/{{selectedsrvsiv.srvid}}</h3>
 <button mat-raised-button (click)="getList()" *ngIf="showDetails"> List of SRVS </button>
-<table mat-table [dataSource]="srvs" class="mat-elevation-z8" *ngIf="!showDetails">
+<table mat-table [dataSource]="srvs" class="mat-elevation-z8" *ngIf="!showDetails" id="allsrvtable">
 
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef> SlNo. </th>

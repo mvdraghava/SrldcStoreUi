@@ -41,6 +41,7 @@ export class CreatesrvComponent implements OnInit {
     name_supplier: ['', Validators.required],
     indent_ref_no: ['', Validators.required],
     indent_date: [new Date(), Validators.required],
+    srvsiv_date: [new Date(), Validators.required],
     indent_department: ['', Validators.required],
     inspected_by: ['', [Validators.required, this.validateEmployee]],
     inspected_countersigned_by: ['', [Validators.required, this.validateEmployee]],
