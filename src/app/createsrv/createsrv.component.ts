@@ -29,7 +29,7 @@ export class CreatesrvComponent implements OnInit {
     designation: ''
 
   }];
-  modeOfReceipts = ['PO', 'LOA', 'MRN', 'STV', 'MTN'];
+  modeOfReceipts = ['PO', 'LOA', 'MRN', 'STV', 'MTN','OTH'];
   employeeDetails = ['inspected_by', 'inspected_countersigned_by','received_by','received_countersigned_by'];
   employeeDetailsDisplay = [
     'Inspected By Employee Details',
